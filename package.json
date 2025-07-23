@@ -1,12 +1,31 @@
 {
   "name": "rastreia-api",
   "version": "1.0.0",
+  "description": "API RESTful para rastrear dados agrícolas de sensores, drone e satélite, com armazenamento em Firebase e registro em Blockchain.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
+  "directories": {
+    "doc": "docs"
   },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seu-usuario/seu-repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/seu-usuario/seu-repo/issues"
+  },
+  "homepage": "https://github.com/seu-usuario/seu-repo#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "dotenv": "^16.0.3"
+    "axios": "^1.10.0",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0"
   }
 }

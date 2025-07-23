@@ -1,19 +1,46 @@
+// controllers/generalController.js
 const express = require('express');
-const app = express();
-const dotenv = require('dotenv');
-dotenv.config();
+const router = express.Router();
 
-const sensorRoutes = require('./routes/sensores');
-const imagensRoutes = require('./routes/imagens');
+// Importa as funções principais de cada controller
+const { getProdutosFormulados } = require('./agrofitController');
+const { getDadosInmet }         = require('./csvController');
+const { getClima }              = require('./environmentController');
+const { getVegetacao }          = require('./satvegController');
+const { getSensorData }         = require('./sensorController');
 
-app.use(express.json());
+router.get('/geral', async (req, res) => {
+  const { lat, lon } = req.query;
 
-app.get('/', (req, res) => {
-  res.send('Bem-vinda à API RASTREIA.ORG');
+  try {
+    // Chama tudo em paralelo
+    const [
+      agrofitData,
+      csvData,
+      climaData,
+      satvegData,
+      sensorData
+    ] = await Promise.all([
+      getProdutosFormulados(req),
+      getDadosInmet(req),
+      getClima(req),
+      getVegetacao(req),
+      getSensorData(req)
+    ]);
+
+    // Retorna tudo no mesmo JSON
+    res.json({
+      agrofit: agrofitData,
+      csv: csvData,
+      environment: climaData,
+      satveg: satvegData,
+      sensor: sensorData
+    });
+
+  } catch (err) {
+    console.error('Erro no endpoint geral:', err);
+    res.status(500).json({ error: 'Houve um problema ao agregar as APIs.' });
+  }
 });
 
-app.use('/sensor', sensorRoutes);
-app.use('/imagens', imagensRoutes);
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+module.exports = router;
