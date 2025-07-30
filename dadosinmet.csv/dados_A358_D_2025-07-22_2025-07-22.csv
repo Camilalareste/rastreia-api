@@ -1,0 +1,13 @@
+Nome: JAGUARIBE
+Codigo Estacao: A358
+Latitude: -5.90555555
+Longitude: -38.62777777
+Altitude: 149.31
+Situacao: Pane
+Data Inicial: 2025-07-22
+Data Final: 2025-07-22
+Periodicidade da Medicao: Diaria
+
+Data Medicao;PRECIPITACAO TOTAL, DIARIO (AUT)(mm);PRESSAO ATMOSFERICA MEDIA DIARIA (AUT)(mB);TEMPERATURA DO PONTO DE ORVALHO MEDIA DIARIA (AUT)(°C);TEMPERATURA MAXIMA, DIARIA (AUT)(°C);TEMPERATURA MEDIA, DIARIA (AUT)(°C);TEMPERATURA MINIMA, DIARIA (AUT)(°C);UMIDADE RELATIVA DO AR, MEDIA DIARIA (AUT)(%);UMIDADE RELATIVA DO AR, MINIMA DIARIA (AUT)(%);VENTO, RAJADA MAXIMA DIARIA (AUT)(m/s);VENTO, VELOCIDADE MEDIA DIARIA (AUT)(m/s);
+2025-07-22;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;null;
+
