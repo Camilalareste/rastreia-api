@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const satvegController = require('../controllers/satvegController');
+const { getData } = require('../controllers/satvegController');
 
-router.get('/', satvegController.getSatvegData);
+router.get('/', async (req, res) => {
+  const data = await getData(req);
+  res.json(data);
+});
 
 module.exports = router;

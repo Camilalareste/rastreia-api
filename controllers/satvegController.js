@@ -1,12 +1,9 @@
-const axios = require('axios');
+async function getData(req) {
+  return {
+    satelite: 'NDVI SATVEG',
+    status: 'em desenvolvimento',
+    dadoSimulado: Math.random().toFixed(2)
+  };
+}
 
-exports.getSatvegData = async (req, res) => {
-  try {
-    // Exemplo de chamada GET básica (ajuste o endpoint conforme necessidade)
-    const response = await axios.get('https://api.cnptia.embrapa.br/satveg/v2');
-    res.json(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao obter dados do SATVeg' });
-  }
-};
+module.exports = { getData };

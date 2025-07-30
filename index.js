@@ -1,35 +1,46 @@
-// index.js
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 🔐 Middlewares opcionais de segurança e CORS
-// const helmet = require('helmet'); // Segurança extra (npm install helmet)
-// const cors = require('cors');     // Libera acesso externo (npm install cors)
+// 🔐 Segurança e CORS (descomenta se quiser usar)
+// const helmet = require('helmet'); // npm install helmet
+// const cors = require('cors');     // npm install cors
 // app.use(helmet());
 // app.use(cors());
 
-// 🧠 Middlewares para ler JSON e formulários
+// 🧠 Middleware para ler JSON e formulário
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Importa os controllers, especificando o caminho correto para a pasta 'controllers'
-const environmentController = require('./controllers/environmentController');
-const satvegController     = require('./controllers/satvegController');
-const agrofitController     = require('./controllers/agrofitController');
-const sensorController      = require('./controllers/sensorController');
-const csvController         = require('./controllers/csvController');
-const generalController     = require('./controllers/generalController'); // Seu generalController
+// 📁 Importação das rotas
+const agrofitRouter = require('./routes/agrofit');
+const csvRouter = require('./routes/csv');
+const environmentRouter = require('./routes/environment');
+const satvegRouter = require('./routes/satveg');
+const sensorRouter = require('./routes/sensores');
+const rastreiaRouter = require('./routes/rastreia');
+const generalRouter = require('./routes/general'); // /api/geral?lat=&lon=
 
-// Rotas individuais (você pode manter ou remover se não forem mais necessárias)
-app.use('/environment', environmentController);
-app.use('/agrofit',     agrofitController);
-app.use('/satveg',      satvegController);
-app.use('/sensor',      sensorController);
-app.use('/csv',         csvController);
+// 🚏 Registro das rotas
+app.use('/api/agrofit', agrofitRouter);
+app.use('/api/csv', csvRouter);
+app.use('/api/environment', environmentRouter);
+app.use('/api/satveg', satvegRouter);
+app.use('/api/sensores', sensorRouter);
+app.use('/api/rastreia', rastreiaRouter);
+app.use('/api', generalRouter); // 👉 /api/geral
 
-// Rota geral que agrega todas as APIs
-app.use('/api', generalController);
+// ✅ Health check (root)
+app.get('/', (req, res) => {
+  res.send('🚀 API funcionando com sucesso!');
+});
 
-// Porta em que o servidor irá rodar
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server rodando na porta ${PORT}`));
+// ❌ 404 para rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({ error: 'Rota não encontrada' });
+});
+
+// 🚀 Inicia o servidor
+app.listen(port, () => {
+  console.log(`🔥 Servidor rodando em http://localhost:${port}`);
+});

@@ -18,5 +18,4 @@ router.post('/satelite', (req, res) => {
 router.get('/relatorio', (req, res) => {
   res.json(registros);
 });
-
 module.exports = router;

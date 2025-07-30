@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const environmentController = require('../controllers/environmentController');
+const { getData } = require('../controllers/environmentController');
 
-router.get('/clima', environmentController.getClima);
+router.get('/', async (req, res) => {
+  const data = await getData(req);
+  res.json(data);
+});
 
 module.exports = router;

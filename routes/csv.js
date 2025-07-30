@@ -1,8 +1,7 @@
-// routes/csv.js
 const express = require('express');
 const router = express.Router();
-const csvController = require('../controllers/csvController');
+const { getDadosInmet } = require('../controllers/csvController');
 
-router.get('/dados-inmet', csvController.getDadosInmet);
+router.get('/dados-inmet', getDadosInmet);
 
 module.exports = router;

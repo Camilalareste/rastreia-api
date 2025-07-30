@@ -1,8 +1,11 @@
-// routes/agrofit.js
 const express = require('express');
 const router = express.Router();
-const agrofitController = require('../controllers/agrofitController');
+const { getData } = require('../controllers/agrofitController');
 
-router.get('/produtos-formulados', agrofitController.getProdutosFormulados);
+router.get('/', async (req, res) => {
+  const data = await getData(req);
+  res.json(data);
+});
 
 module.exports = router;
+

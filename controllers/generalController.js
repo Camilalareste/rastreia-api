@@ -1,33 +1,29 @@
-const agrofit = require('./agrofitController');
-const csvApi  = require('./csvController');
-const env     = require('./environmentController');
-const satveg  = require('./satvegController');
-const sensor  = require('./sensorController');
+const express = require('express');
+const router = express.Router();
 
-// Supondo que cada controller exporte uma função async tipo getData(req, res)
-async function getAll(req, res) {
+const { getClima } = require('./environmentController');
+const { getAgrofit } = require('./agrofitController');
+const { getSatveg } = require('./satyegController');
+const { getSensor } = require('./sensorController');
+const { getCsv } = require('./csvController');
+
+router.get('/route', async (req, res) => {
+  const { lat, lon } = req.query;
   try {
-    const { lat, lon } = req.query;
-    // dispara todas as promessas em paralelo
-    const [agrofitData, csvData, envData, satvegData, sensorData] = await Promise.all([
-      agrofit.getData(req),            // ou agrofit.getData(lat,lon)
-      csvApi.getData(req),
-      env.getClima(req),              // se tiver método específico
-      satveg.getData(req),
-      sensor.getData(req),
+    const [clima, agrofit, satveg, sensor, csv] = await Promise.all([
+      getClima({ lat, lon }),
+      getAgrofit({ lat, lon }),
+      getSatveg({ lat, lon }),
+      getSensor({ lat, lon }),
+      getCsv({ lat, lon })
     ]);
-
-    res.json({
-      agrofit: agrofitData,
-      csv:     csvData,
-      environment: envData,
-      satveg:  satvegData,
-      sensor:  sensorData
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Deu ruim ao agregar APIs' });
+    res.json({ clima, agrofit, satveg, sensor, csv });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Erro ao agregar dados' });
   }
-}
+});
 
-module.exports = { getAll };
+module.exports = router;
+const generalRouter = require('./controllers/generalController');
+app.use('/api', generalRouter);
